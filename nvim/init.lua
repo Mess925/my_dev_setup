@@ -61,7 +61,13 @@ require("lazy").setup({
   { 'tomtom/tcomment_vim' },
   
   -- Coc nvim 
-  { 'neoclide/coc.nvim', branch = 'release', },
+  { 'neoclide/coc.nvim', branch = 'release', config = function()
+	  vim.g.coc_global_extensions = {
+		  'coc-clangd',
+		  'coc-json',
+	  }
+  end
+  },
   
   -- 42 Header plugin
   {
@@ -126,3 +132,22 @@ keymap('n', '<leader>h', ':Stdheader<CR>')
 -- Buffer navigation
 keymap('n', '<leader>b', ':bp<CR>')
 
+-- CoC key mappings
+-- Use tab for trigger completion
+keymap('i', '<TAB>', 'pumvisible() ? "\\<C-n>" : "\\<TAB>"', { expr = true })
+keymap('i', '<S-TAB>', 'pumvisible() ? "\\<C-p>" : "\\<C-h>"', { expr = true })
+
+-- Use <cr> to confirm completion
+keymap('i', '<CR>', 'pumvisible() ? coc#_select_confirm() : "\\<C-g>u\\<CR>\\<c-r>=coc#on_enter()\\<CR>"', { expr = true })
+
+-- GoTo code navigation
+keymap('n', 'gd', '<Plug>(coc-definition)', { silent = true })
+keymap('n', 'gy', '<Plug>(coc-type-definition)', { silent = true })
+keymap('n', 'gi', '<Plug>(coc-implementation)', { silent = true })
+keymap('n', 'gr', '<Plug>(coc-references)', { silent = true })
+
+-- Show documentation
+keymap('n', 'K', ':call CocAction("doHover")<CR>', { silent = true })
+
+-- Show function signature
+keymap('i', '<C-k>', '<Cmd>call CocActionAsync("showSignatureHelp")<CR>', { silent = true })
