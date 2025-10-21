@@ -44,8 +44,13 @@ require("lazy").setup({
     'junegunn/fzf.vim',
     dependencies = { 'junegunn/fzf' }
   },
-  
-  -- Ayu colorscheme
+  {
+  "tpope/vim-fugitive",
+  lazy = false,      -- load on startup
+  priority = 1000,   -- ensure it's ready before other plugins
+	},
+
+-- Ayu colorscheme
   {
     'ayu-theme/ayu-vim',
     config = function()
@@ -53,11 +58,23 @@ require("lazy").setup({
       vim.cmd('colorscheme ayu')
     end
   },
+  {
+  'lewis6991/gitsigns.nvim',
+  opts = {
+    current_line_blame = true, -- Show "Last modified by X, Y ago" inline
+    current_line_blame_opts = {
+      delay = 500,
+      virt_text_pos = 'eol', -- at end of line
+    },
+    current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+  },
+},
+
   
   -- Auto pairs
   { 'jiangmiao/auto-pairs' },
   
-  -- Comments
+ -- Comments
   { 'tomtom/tcomment_vim' },
   
   -- Coc nvim 
@@ -104,7 +121,7 @@ local keymap = vim.keymap.set
 keymap('n', '<leader><CR>', ':source ~/.config/nvim/init.lua<CR>')
 
 -- File navigation
-keymap('n', '<leader>pv', ':Vex<CR>')
+keymap('n', '<leader>pv', ':vsp<CR>')
 keymap('n', '<C-p>', ':GFiles<CR>')
 keymap('n', '<leader>f', ':Files<CR>')
 keymap('n', '<leader>d', ':Ex<CR>')
@@ -151,3 +168,4 @@ keymap('n', 'K', ':call CocAction("doHover")<CR>', { silent = true })
 
 -- Show function signature
 keymap('i', '<C-k>', '<Cmd>call CocActionAsync("showSignatureHelp")<CR>', { silent = true })
+
